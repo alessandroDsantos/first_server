@@ -28,6 +28,18 @@ server.get("/usuarios", (req, res) => { //metodo get
     res.status(200).json(usuarios);
 });
 
+server.get("/usuarios/:id", (req, res) => {
+    const id = Number(req.params.id); 
+    
+    const usuario = usuarios[id - 1];
+
+    if(usuario){
+        return res.status(200).json(usuario);
+    } else {
+        return res.status(404).json({ msg: "Produto não encontrado." });
+    }
+})
+
 server.post("/usuarios", (req, res) => {
     const usuario = req.body;
     usuarios.push(usuario);
