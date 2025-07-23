@@ -1,11 +1,38 @@
 import express from "express"; // importar o express
 
 const server = express(); // definir a variável para receber a função do express
+server.use(express.json()); // para poder receber os arquivos já convertidos em json
+
+
 const PORT = 3000; // definir a porta que será usada pelo servidor
 
-server.get("/", (req,res) => { //metodo get
-    res.send("Olá Mundo!");
+const usuarios = [
+    {
+        name: "Pedro",
+        email: "pedro@email.com",
+        idade: 23
+    },
+    {
+        name: "Mateus",
+        email: "mateus@email.com",
+        idade: 30
+    },
+    {
+        name: "Ana",
+        email: "ana@email.com",
+        idade: 25
+    }
+]
+
+server.get("/usuarios", (req, res) => { //metodo get
+    res.status(200).json(usuarios);
 });
+
+server.post("/usuarios", (req, res) => {
+    const usuario = req.body;
+    usuarios.push(usuario);
+    return res.status(201).json({ msg: "Usuário cadastrado!"});
+})
 
 server.listen(PORT, () => {
     console.log(`O servidor está rodando na porta ${PORT}!`);
